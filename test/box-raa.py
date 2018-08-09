@@ -11,7 +11,7 @@ initial = {'c': lambda x: x/(x**2+2.1**2)**3.9,
 		   'b': lambda x: x/(x**2+7.5**2)**4.9 }
 
 e1 = event.event(LBT={'mu':1.0}, medium={'type':'static', 'static_dt': 0.05})
-e1.initialize_HQ(N_charm=400000, N_bottom=400000, init_flags={"type":"Box", "pmax": 15.})
+e1.initialize_HQ(N_charm=400000, N_bottom=4, init_flags={"type":"Box", "pmax": 15.})
 
 pc0, xc0 = e1.HQ_hist(4)
 pb0, xb0 = e1.HQ_hist(5)

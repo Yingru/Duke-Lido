@@ -19,7 +19,8 @@ def get_qhat(p, T):
 	qhatT3c = []
 	qhatT3b = []
 	e1 = event.event(medium={'type':'static', 'static_dt':dt},
-				 LBT={'mu': 0.6}
+				 LBT={'mu': 0.6},
+                 LGV={'A':0.4, 'B':0.5}
 				)
 	e1.initialize_HQ(N_charm=10000, N_bottom=10000,
 				init_flags={'type':'probe', 'E0':10.})
@@ -42,7 +43,7 @@ def get_qhat(p, T):
 			break
 	return np.array([np.mean(qhatT3c), np.mean(qhatT3b)])
 
-"""
+
 with h5py.File("full-qhat.hdf5", 'a') as f:
 	name = 'coll'
 	if name in f:
@@ -55,7 +56,8 @@ with h5py.File("full-qhat.hdf5", 'a') as f:
 	gp.attrs.create("T", [0.16, 0.2, 0.3, 0.4, 0.5, 0.6])
 	gp.attrs.create("p", [0.01, 5, 10])
 	gp.create_dataset('qhat', data=res)
-"""
+
+
 Ts = np.array([0.16, 0.2, 0.3, 0.4, 0.5, 0.6])
 ps = np.array([0.01, 5, 10])
 Ec = (1.3**2+ps**2)**0.5

@@ -4,7 +4,6 @@
 double A=0., B=0.;
 double const tiny = 1e-10;
 
-/*
 double kperp(double E, double M, double T){
 	return std::pow(T,3)*( A + B/(E*T) );
 }
@@ -16,8 +15,8 @@ double kpara(double E, double M, double T){
 double dkpara_dp2(double E, double M, double T){
 	return std::pow(T,3)*B*(-1.)/(2.*E*E*E*T);
 }
-*/
 
+/*
 double kperp(double E, double M, double T){
     return std::pow(T,3) * 4.*3.14159 / A;
 }
@@ -29,6 +28,7 @@ double kpara(double E, double M, double T){
 double dkpara_dp2(double E, double M, double T){
     return 0;
 }
+*/
 
 void initialize_transport_coeff(double _A, double _B){
 	A = _A; B = _B;

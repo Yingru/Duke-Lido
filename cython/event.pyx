@@ -324,8 +324,10 @@ cdef class event:
                 #              init_flags['dxy'],
                 #              init_flags['b'])
                 HQ_xy_sampler = open(init_flags['HQ_file'], 'r')
-                logpTmax = log(init_flags['pTmax'])
-                logpTmin = log(init_flags['pTmin'])
+                pTmin = init_flags['pTmin']
+                pTmax = init_flags['pTmax']
+                #logpTmax = log(init_flags['pTmax'])
+                #logpTmin = log(init_flags['pTmin'])
                 Emax = init_flags['Emax']
                 
                 print("Heavy quarks are freestreamed to {} fm/c".format(self.tau0))
@@ -335,11 +337,13 @@ cdef class event:
                 while it != self.HQ_list[pid].end():
                     # Uniformly sample log(pT), phi, and ny = y/ymax
                     # ymin, ymax are determined by the max-mT
-                    pT = np.exp(np.random.uniform(logpTmin, logpTmax))
+                    #pT = np.exp(np.random.uniform(logpTmin, logpTmax))
+                    #pT = np.random.uniform(np.exp(logpTmin), np.exp(logpTmax))
+                    pT = np.random.uniform(pTmin, pTmax)
                     mT = sqrt(pT**2 + mass**2)
                     phipt = np.random.uniform(0, 2.*np.pi)
                     #ymax = np.min([np.arccosh(Emax/mT), 3.0])
-                    ymax = 1.0  ## Yingru
+                    ymax = 0.5  ## Yingru
                     rapidity = np.random.uniform(-ymax, ymax)
                     pcharm = [mT*cosh(rapidity), pT*cos(phipt), \
                                pT*sin(phipt), mT*sinh(rapidity)]
@@ -456,7 +460,7 @@ cdef class event:
         return status
 
     cpdef bool perform_hydro_step(self,
-            StaticProperty={"Temp": 0.4, "Vx":0.0, "Vy":0.0, "Vz":0.0}  ):
+            StaticProperty={"Temp": 0.3, "Vx":0.0, "Vy":0.0, "Vz":0.0}  ):
         PyErr_CheckSignals()
         if self.mode == 'dynamic':
             self.hydro_reader.load_next()
