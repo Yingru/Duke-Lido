@@ -95,6 +95,9 @@ cdef class Medium:
         else:
             raise ValueError("Medium mode not implemented.")
 
+    def close_medium(self):
+        self._f.close()
+
     cpdef init_tau(self):
         return self._tstart
     cpdef hydro_status(self):
@@ -297,6 +300,9 @@ cdef class event:
                 initialize_transport_coeff(LGV['A'], LGV['B'])
                 self.lgv = True
 
+    def clean_medium(self):
+        self.fs_reader.close_medium()
+        self.hydro_reader.close_medium()
 
     # The current time of the evolution.
     def sys_time(self) :
