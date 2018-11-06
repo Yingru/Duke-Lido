@@ -27,5 +27,5 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 # also install the generated c++ shared library
 install(TARGETS ${LIBRARY_NAME} DESTINATION lib/${LIBRARY_NAME})
 # install the library headers
-file(GLOB HEADERS *.h)
-install(FILES ${HEADERS} DESTINATION include/${LIBRARY_NAME})
+#file(GLOB HEADERS *.h)
+#install(FILES ${HEADERS} DESTINATION include/${LIBRARY_NAME})

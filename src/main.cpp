@@ -15,6 +15,24 @@ void test_table(void);
 
 
 int main(int argc, char* argv[]){
+    double mu;
+    std::string mode;
+    for (int i=1; i<argc; i++) {
+        if (! strcmp(argv[i], "--mu")) {
+            mu = atof(argv[i+1]);
+        } else if (! strcmp(argv[i], "--mode")){
+            mode = argv[i+1];
+        }
+    }
+
+    std::cout << "mu: " << mu << std::endl;
+
+    initialize(mode, "./settings.xml", mu);
+}
+
+
+/*
+int main(int argc, char* argv[]){
 	initialize_mD_and_scale(1, 2.0);
 	//auto rQq2Qqg = Rate<3, 3, double(*)(const double*, void*)> ("Boltzmann/cq2cqg", "settings.xml", M2_Qq2Qqg);
 	//rQq2Qqg.initX("table.h5");
@@ -22,17 +40,17 @@ int main(int argc, char* argv[]){
 	auto rQqg2Qq = Rate<3, 4, double(*)(const double*, void*)> ("Boltzmann/cqg2cq", "settings.xml", Ker_Qqg2Qq);
 	rQqg2Qq.initX("table.h5");
 	rQqg2Qq.init("table.h5");
-	/*std::vector<fourvec> FS;
+	std::vector<fourvec> FS;
 	for (auto i=0; i<10000; i++){
 		double E = std::rand()*30./RAND_MAX + 1.4;
 		double T = std::rand()*0.85/RAND_MAX + 0.15;
 		double dt = std::rand()*29.9/RAND_MAX + 0.1;
 		//LOG_INFO << "E,T,dt = "<<E<< " "<<T<<" "<<dt;
 		rQqg2Qq.sample({E, T, dt}, FS);
-	}*/
+	}
 	return 0;
 }
-
+*/
 
 
 

@@ -1,10 +1,20 @@
-cmake_minimum_required(VERSION 2.8)
-project(hybrid CXX)
+cmake_minimum_required(VERSION 3.4)
+project(Scattering CXX)
 
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++11" CXX11)
-if(NOT CXX11)
-  message(FATAL_ERROR "Your compiler does not support C++11")
+
+# require C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(STATIC "build static executable" OFF)
+if(CMAKE_CXX_FLAGS MATCHES "(^| )-static($| )")
+  set(STATIC ON)
+endif()
+# adapted from cmake source: Modules/Compiler/CrayPrgEnv.cmake
+if(STATIC)
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+  set(CMAKE_LINK_SEARCH_START_STATIC TRUE)
 endif()
 
 # Find and use Boost.
@@ -12,6 +22,7 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost 1.50 REQUIRED COMPONENTS filesystem program_options system log log_setup thread REQUIRED)
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+
 
 # Search for the HDF5 C++ library.  The CMake FindHDF5 package does not work
 # correctly for C++, because it will report success if it finds only the C
@@ -36,7 +47,7 @@ endif()
 
 
 # find and use gsl
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/CMake)
 FIND_PACKAGE(GSL REQUIRED)
 include_directories(${GSL_INCLUDE_DIRS} ${GSLCBLAS_INCLUDE_DIRS})
 
@@ -104,5 +115,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_REQUIRED_FLAGS} --co
 
 set(LIBRARY_NAME "lib${PROJECT_NAME}")
 add_subdirectory(src)
+
+# install dependencies 
+install (FILES settings.xml DESTINATION results)
 # add_subdirectory(test)
 # add_subdirectory(doc)
