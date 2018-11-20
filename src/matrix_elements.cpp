@@ -73,8 +73,8 @@ double Debye_mass::get_mD2(double T){
 }
 
 void initialize_mD_and_scale(const unsigned int type, const double scale){
+    renormalization_scale = scale;
 	t_channel_mD2 = new Debye_mass(type);
-	renormalization_scale = scale;
 	LOG_INFO << "Scale = " << renormalization_scale;
 }
 
